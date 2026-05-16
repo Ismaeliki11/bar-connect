@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import AppHeader from "@/components/AppHeader";
 import PageWrapper from "@/components/PageWrapper";
 import { useUser } from "@/components/UserContext";
+import ConfirmModal from "@/components/ConfirmModal";
 
 type RecordType = "entrada" | "salida";
 
@@ -68,6 +69,7 @@ export default function FichajePage() {
   const [capturing, setCapturing] = useState(false);
   const [cameraStream, setCameraStream] = useState<MediaStream | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [recordToDelete, setRecordToDelete] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -182,8 +184,13 @@ export default function FichajePage() {
   }
 
   function deleteRecord(id: string) {
-    if (confirm("¿Estás seguro de que quieres eliminar este registro?")) {
-      setRecords((prev) => prev.filter((r) => r.id !== id));
+    setRecordToDelete(id);
+  }
+
+  function handleConfirmDelete() {
+    if (recordToDelete) {
+      setRecords((prev) => prev.filter((r) => r.id !== recordToDelete));
+      setRecordToDelete(null);
     }
   }
 
@@ -200,7 +207,7 @@ export default function FichajePage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black flex flex-col max-w-[430px] left-1/2 -translate-x-1/2"
+            className="fixed top-0 bottom-0 w-full max-w-[430px] z-[70] bg-black flex flex-col left-1/2 -translate-x-1/2"
           >
             <div className="absolute top-4 right-4 z-50">
               <button 
@@ -220,7 +227,7 @@ export default function FichajePage() {
             />
             <canvas ref={canvasRef} className="hidden" />
             
-            <div className="flex items-center justify-center gap-6 py-8 bg-black/80 backdrop-blur-md">
+            <div className="flex items-center justify-center gap-6 pt-8 pb-[calc(2rem+env(safe-area-inset-bottom))] bg-black/80 backdrop-blur-md">
               <button
                 onClick={registerWithoutPhoto}
                 className="text-white/60 text-sm font-medium hover:text-white transition-colors"
@@ -377,6 +384,15 @@ export default function FichajePage() {
           </div>
         )}
       </div>
+      <ConfirmModal
+        isOpen={!!recordToDelete}
+        onClose={() => setRecordToDelete(null)}
+        onConfirm={handleConfirmDelete}
+        title="¿Eliminar registro?"
+        message="Esta acción no se puede deshacer. El registro de fichaje se borrará permanentemente."
+        confirmText="Eliminar"
+        type="danger"
+      />
     </PageWrapper>
   );
 }

@@ -1,0 +1,112 @@
+
+> barconnect-app@0.1.0 lint
+> eslint
+
+
+/Users/ismael/Desktop/paginas/barconnect-app/src/app/cocina/page.tsx
+  38:9  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/ismael/Desktop/paginas/barconnect-app/src/app/cocina/page.tsx:38:9
+  36 |       const savedTasks = localStorage.getItem(`tasks_cocina_${currentUser}`);
+  37 |       if (savedTasks) {
+> 38 |         setTasks(JSON.parse(savedTasks));
+     |         ^^^^^^^^ Avoid calling setState() directly within an effect
+  39 |       } else {
+  40 |         setTasks(initialTasks);
+  41 |       }  react-hooks/set-state-in-effect
+
+/Users/ismael/Desktop/paginas/barconnect-app/src/app/fichaje/page.tsx
+   51:7   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/ismael/Desktop/paginas/barconnect-app/src/app/fichaje/page.tsx:51:7
+  49 |     const savedRecords = localStorage.getItem("barconnect_history");
+  50 |     if (savedRecords) {
+> 51 |       setRecords(JSON.parse(savedRecords));
+     |       ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  52 |     }
+  53 |     setIsLoaded(true);
+  54 |   }, []);  react-hooks/set-state-in-effect
+  115:11  error  Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+/Users/ismael/Desktop/paginas/barconnect-app/src/app/fichaje/page.tsx:115:11
+  113 |
+  114 |     const newRecord: ClockRecord = {
+> 115 |       id: Date.now().toString(),
+      |           ^^^^^^^^^^ Cannot call impure function
+  116 |       type,
+  117 |       time: getCurrentTime(),
+  118 |       date: todayStr,                                                                                                                                                                                                                                                                                                                                                                                                                                          react-hooks/purity
+
+/Users/ismael/Desktop/paginas/barconnect-app/src/app/limpieza/page.tsx
+  51:9  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/ismael/Desktop/paginas/barconnect-app/src/app/limpieza/page.tsx:51:9
+  49 |       const savedTasks = localStorage.getItem(`tasks_limpieza_${currentUser}`);
+  50 |       if (savedTasks) {
+> 51 |         setTasks(JSON.parse(savedTasks));
+     |         ^^^^^^^^ Avoid calling setState() directly within an effect
+  52 |       } else {
+  53 |         setTasks(initialTasks);
+  54 |       }  react-hooks/set-state-in-effect
+
+/Users/ismael/Desktop/paginas/barconnect-app/src/app/page.tsx
+  31:9  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/ismael/Desktop/paginas/barconnect-app/src/app/page.tsx:31:9
+  29 |       const savedTasks = localStorage.getItem(`tasks_${currentUser}`);
+  30 |       if (savedTasks) {
+> 31 |         setTasks(JSON.parse(savedTasks));
+     |         ^^^^^^^^ Avoid calling setState() directly within an effect
+  32 |       } else {
+  33 |         setTasks(mockTasks);
+  34 |       }  react-hooks/set-state-in-effect
+
+/Users/ismael/Desktop/paginas/barconnect-app/src/components/AppHeader.tsx
+  3:32  warning  'UserIcon' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/ismael/Desktop/paginas/barconnect-app/src/components/UserContext.tsx
+  23:7  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/ismael/Desktop/paginas/barconnect-app/src/components/UserContext.tsx:23:7
+  21 |     const savedUser = localStorage.getItem("barconnect_user") as User;
+  22 |     if (savedUser === "Clemen" || savedUser === "Isabel") {
+> 23 |       setCurrentUser(savedUser);
+     |       ^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  24 |     }
+  25 |     setIsLoaded(true);
+  26 |   }, []);  react-hooks/set-state-in-effect
+
+✖ 7 problems (6 errors, 1 warning)
+
