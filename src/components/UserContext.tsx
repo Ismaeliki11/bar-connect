@@ -19,10 +19,12 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const savedUser = localStorage.getItem("barconnect_user") as User;
-    if (savedUser === "Clemen" || savedUser === "Isabel") {
-      setCurrentUser(savedUser);
-    }
-    setIsLoaded(true);
+    setTimeout(() => {
+      if (savedUser === "Clemen" || savedUser === "Isabel") {
+        setCurrentUser(savedUser);
+      }
+      setIsLoaded(true);
+    }, 0);
   }, []);
 
   const login = (user: User) => {

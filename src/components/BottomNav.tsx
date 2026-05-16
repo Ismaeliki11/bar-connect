@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LayoutDashboard, Clock, ChefHat, Sparkles } from "lucide-react";
+import { motion } from "framer-motion";
 
 const tabs = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
@@ -23,26 +24,44 @@ export default function BottomNav() {
             <Link
               key={href}
               href={href}
-              className="flex flex-col items-center justify-center gap-1 flex-1 py-2 rounded-lg transition-colors"
+              className="flex flex-col items-center justify-center gap-1 flex-1 py-2 rounded-lg relative"
             >
-              <div
-                className={`flex items-center justify-center w-12 h-6 rounded-full transition-colors ${
-                  active ? "bg-secondary-container" : ""
-                }`}
-              >
-                <Icon
-                  size={20}
-                  className={active ? "text-secondary" : "text-on-surface-variant"}
-                  strokeWidth={active ? 2.5 : 1.8}
-                />
+              <div className="flex items-center justify-center w-12 h-6 relative">
+                {active && (
+                  <motion.div
+                    layoutId="activeTab"
+                    className="absolute inset-0 bg-secondary-container rounded-full"
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  />
+                )}
+                <motion.div
+                  animate={{ scale: active ? 1.1 : 1 }}
+                  className="relative z-10"
+                >
+                  <Icon
+                    size={20}
+                    className={active ? "text-secondary" : "text-on-surface-variant"}
+                    strokeWidth={active ? 2.5 : 1.8}
+                  />
+                </motion.div>
               </div>
-              <span
-                className={`text-[10px] font-medium leading-none ${
+              <motion.span
+                animate={{ 
+                  scale: active ? 1.05 : 1,
+                  color: active ? "var(--color-secondary)" : "var(--color-on-surface-variant)" 
+                }}
+                className={`text-[10px] font-medium leading-none relative z-10 ${
                   active ? "text-secondary" : "text-on-surface-variant"
                 }`}
               >
                 {label}
-              </span>
+              </motion.span>
+              {active && (
+                <motion.div 
+                  layoutId="activeDot"
+                  className="absolute -bottom-1 w-1 h-1 bg-secondary rounded-full"
+                />
+              )}
             </Link>
           );
         })}

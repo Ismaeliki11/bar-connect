@@ -170,3 +170,26 @@ Status chips should use a "de-saturated" background with a high-contrast text la
 
 ### Cards
 Cards are used to group related information. They should feature a simple 1px neutral border rather than a shadow, maintaining the flat, professional aesthetic of the system.
+
+## Animations & Motion
+
+Animations in BarConnect are not mere decorations; they are functional tools that provide feedback, establish hierarchy, and guide the user through the interface. Every interaction should feel intentional, smooth, and premium.
+
+### Core Principles
+
+1. **Purposeful & Professional**: Every animation must have a reason to exist. Avoid "bouncy" or "playful" animations that feel out of place in a professional tool. Favor snappy, fluid motions that reinforce the application's reliability.
+2. **Subtlety is Key**: Motion should be felt more than seen. Use subtle changes in opacity and position. A 10px vertical shift or a 2% scale change is often enough to convey meaning.
+3. **Responsive Timing**: Use consistent durations. 
+   - **Snappy (0.2s - 0.3s)**: For micro-interactions like button presses or checkbox toggles.
+   - **Fluid (0.4s - 0.6s)**: For page entrances and layout transitions.
+4. **Natural Easing**: Always use custom cubic-bezier curves for a premium feel. Favor `[0.22, 1, 0.36, 1]` (Quart out) for a "snappy yet smooth" effect that feels high-end.
+
+### Motion Patterns
+
+- **Staggered Entrances**: When a list or a grid of items appears, they should enter one by one with a slight delay (0.05s - 0.1s stagger). This reduces cognitive load and makes the app feel "alive."
+- **Layout Transitions**: Use Framer Motion's `layout` prop to smoothly animate elements as they change size or position. This is particularly effective when moving items between "Pending" and "Completed" states.
+- **Interactive Feedback**: All clickable elements must respond to `whileTap` with a slight scale down (0.97 - 0.98) and `whileHover` with a subtle elevation or color shift.
+- **Page Transitions**: Global transitions should utilize `AnimatePresence` with a consistent slide-and-fade effect (e.g., `initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 }`).
+- **Presence Cues**: Use `AnimatePresence` to handle element removal. Items being deleted or completed should exit gracefully (scale down or fade out) rather than disappearing instantly.
+
+By following these guidelines, BarConnect maintains its identity as a professional, top-tier management tool where every pixel and every motion reflects quality and attention to detail.
