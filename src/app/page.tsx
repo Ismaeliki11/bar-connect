@@ -94,7 +94,7 @@ export default function Dashboard() {
       <motion.div 
         initial={{ opacity: 0, x: -10 }}
         animate={{ opacity: 1, x: 0 }}
-        className="px-3 pt-5 pb-2"
+        className="px-3 md:px-8 pt-5 md:pt-8 pb-2"
       >
         <h1 className="text-2xl font-semibold text-on-surface">
           Hola, {currentUser}
@@ -109,7 +109,7 @@ export default function Dashboard() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="mx-3 mt-3 rounded-xl bg-primary-container p-4 shadow-sm"
+        className="mx-3 md:mx-8 mt-3 md:mt-6 rounded-xl md:rounded-2xl bg-primary-container p-4 md:p-8 shadow-sm"
       >
         <p className="text-xs font-semibold uppercase tracking-widest text-on-primary-container mb-1">
           Estado Actual
@@ -142,7 +142,7 @@ export default function Dashboard() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="mx-3 mt-4 grid grid-cols-2 gap-3"
+        className="mx-3 md:mx-8 mt-4 md:mt-8 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6"
       >
         <motion.div variants={itemVariants}>
           <Link
@@ -167,7 +167,7 @@ export default function Dashboard() {
       </motion.div>
 
       {/* Task progress */}
-      <div className="mx-3 mt-5 pb-4">
+      <div className="mx-3 md:mx-8 mt-5 md:mt-10 pb-4 md:pb-8">
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

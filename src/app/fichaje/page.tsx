@@ -207,7 +207,7 @@ export default function FichajePage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed top-0 bottom-0 w-full max-w-[430px] z-[70] bg-black flex flex-col left-1/2 -translate-x-1/2"
+            className="fixed top-0 bottom-0 w-full max-w-[430px] md:max-w-3xl z-[70] bg-black flex flex-col left-1/2 -translate-x-1/2"
           >
             <div className="absolute top-4 right-4 z-50">
               <button 
@@ -255,7 +255,7 @@ export default function FichajePage() {
       </AnimatePresence>
 
       {/* Main content */}
-      <div className="px-4 pt-5 pb-20">
+      <div className="px-4 md:px-8 pt-5 md:pt-10 pb-20 md:pb-10">
         {/* Clock display */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}

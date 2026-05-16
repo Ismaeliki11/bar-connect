@@ -115,7 +115,7 @@ export default function CocinaPage() {
     <PageWrapper>
       <AppHeader title="Cocina" />
 
-      <div className="px-4 pt-5">
+      <div className="px-4 md:px-8 pt-5 md:pt-10">
         {/* Header */}
         <div className="flex flex-col mb-5">
           <motion.div

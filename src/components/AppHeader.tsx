@@ -15,13 +15,13 @@ export default function AppHeader({ title = "BarConnect" }: AppHeaderProps) {
     <motion.header 
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="flex items-center justify-between px-4 py-3 bg-surface-white border-b border-outline-variant sticky top-0 z-40"
+      className="flex items-center justify-between px-4 md:px-8 py-3 md:py-5 bg-surface-white border-b border-outline-variant sticky top-0 z-40"
     >
       <div className="flex items-center gap-3">
         <motion.button 
           whileTap={{ scale: 0.9 }}
           onClick={logout}
-          className="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center overflow-hidden transition-transform"
+          className="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center overflow-hidden transition-transform md:hidden"
           title="Cerrar sesión"
         >
           <motion.div 
@@ -32,7 +32,7 @@ export default function AppHeader({ title = "BarConnect" }: AppHeaderProps) {
             {currentUser?.substring(0, 2)}
           </motion.div>
         </motion.button>
-        <span className="font-semibold text-base text-on-surface">{title}</span>
+        <span className="font-semibold text-base md:text-xl text-on-surface tracking-tight">{title}</span>
       </div>
       
       <div className="flex items-center gap-1">
