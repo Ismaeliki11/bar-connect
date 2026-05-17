@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ChefHat, Sparkles, AlarmClock, CheckCircle2, Circle } from "lucide-react";
+import { ChefHat, Sparkles, AlarmClock, CheckCircle2, Circle, Coins } from "lucide-react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useRouter } from "next/navigation";
 import AppHeader from "@/components/AppHeader";
 import PageWrapper from "@/components/PageWrapper";
@@ -19,7 +19,7 @@ const mockTasks = [
 const SHIFT_NAME = "Turno de Tarde";
 const DATE_STR = "Viernes, 27 de Octubre";
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -29,7 +29,7 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
@@ -162,6 +162,16 @@ export default function Dashboard() {
             <Sparkles size={24} className="text-on-surface-variant" />
             <span className="text-sm font-medium text-on-surface">Limpieza</span>
             <span className="text-xs text-error font-medium">1 Tarea urgente</span>
+          </Link>
+        </motion.div>
+        <motion.div variants={itemVariants}>
+          <Link
+            href="/dinero"
+            className="flex flex-col items-center justify-center gap-2 py-4 rounded-xl border border-outline-variant bg-surface-white active:bg-surface-low transition-all hover:shadow-md h-full"
+          >
+            <Coins size={24} className="text-on-surface-variant" />
+            <span className="text-sm font-medium text-on-surface">Dinero</span>
+            <span className="text-xs text-success font-medium">Caja diaria</span>
           </Link>
         </motion.div>
       </motion.div>

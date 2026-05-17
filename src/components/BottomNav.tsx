@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Clock, ChefHat, Sparkles, LogOut } from "lucide-react";
+import { LayoutDashboard, Clock, ChefHat, Sparkles, LogOut, Coins } from "lucide-react";
 import { motion } from "framer-motion";
 import { useUser } from "./UserContext";
 
@@ -11,6 +11,7 @@ const tabs = [
   { href: "/fichaje", label: "Fichaje", icon: Clock },
   { href: "/cocina", label: "Cocina", icon: ChefHat },
   { href: "/limpieza", label: "Limpieza", icon: Sparkles },
+  { href: "/dinero", label: "Dinero", icon: Coins },
 ];
 
 export default function BottomNav() {

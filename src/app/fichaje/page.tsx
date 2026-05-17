@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Camera, CheckCircle2, Clock, Calendar, Trash2, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import AppHeader from "@/components/AppHeader";
 import PageWrapper from "@/components/PageWrapper";
 import { useUser } from "@/components/UserContext";
@@ -20,7 +20,7 @@ interface ClockRecord {
   userName: string;
 }
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -30,7 +30,7 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 10 },
   visible: {
     opacity: 1,
