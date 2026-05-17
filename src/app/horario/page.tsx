@@ -2109,13 +2109,13 @@ export default function HorarioPage() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setSelectedDayDetail(null)}
-                className="fixed inset-0 bg-black/40 backdrop-blur-[1.5px] z-50 cursor-pointer hidden md:block"
+                className="fixed inset-0 bg-black/40 backdrop-blur-[1.5px] z-[60] cursor-pointer hidden md:block"
               />
               <motion.div
                 initial={{ opacity: 0, scale: 0.95, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-sm bg-surface-white rounded-2xl shadow-2xl z-[60] overflow-hidden border border-outline-variant hidden md:block"
+                className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-sm bg-surface-white rounded-2xl shadow-2xl z-[70] overflow-hidden border border-outline-variant hidden md:block"
               >
                 <div className="p-5 border-b border-outline-variant bg-surface-white flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -2194,7 +2194,7 @@ export default function HorarioPage() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setIsMobileDrawerOpen(false)}
-                className="fixed inset-0 bg-black/50 backdrop-blur-[1px] z-50 md:hidden cursor-pointer"
+                className="fixed inset-0 bg-black/50 backdrop-blur-[1px] z-[60] md:hidden cursor-pointer"
               />
 
               <motion.div
@@ -2202,7 +2202,7 @@ export default function HorarioPage() {
                 animate={{ y: 0 }}
                 exit={{ y: "100%" }}
                 transition={{ type: "spring", damping: 25, stiffness: 220 }}
-                className="fixed bottom-0 left-0 right-0 bg-surface-white rounded-t-2xl z-50 md:hidden border-t border-outline-variant/80 shadow-2xl flex flex-col max-h-[75vh]"
+                className="fixed bottom-0 left-0 right-0 bg-surface-white rounded-t-2xl z-[70] md:hidden border-t border-outline-variant/80 shadow-2xl flex flex-col max-h-[75vh]"
               >
                 <div className="py-2.5 flex justify-center shrink-0">
                   <div className="w-10 h-1.5 bg-outline-variant rounded-full" />
@@ -2300,7 +2300,7 @@ export default function HorarioPage() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setIsAddingExceptionMobile(false)}
-                className="fixed inset-0 bg-black/60 backdrop-blur-[1px] z-50 md:hidden cursor-pointer"
+                className="fixed inset-0 bg-black/60 backdrop-blur-[1px] z-[60] md:hidden cursor-pointer"
               />
 
               <motion.div
@@ -2308,7 +2308,7 @@ export default function HorarioPage() {
                 animate={{ y: 0 }}
                 exit={{ y: "100%" }}
                 transition={{ type: "spring", damping: 25, stiffness: 220 }}
-                className="fixed bottom-0 left-0 right-0 bg-surface-white rounded-t-2xl z-50 md:hidden border-t border-outline-variant shadow-2xl flex flex-col max-h-[90vh]"
+                className="fixed bottom-0 left-0 right-0 bg-surface-white rounded-t-2xl z-[70] md:hidden border-t border-outline-variant shadow-2xl flex flex-col max-h-[90vh]"
               >
                 <div className="py-2.5 flex justify-center shrink-0">
                   <div className="w-10 h-1.5 bg-outline-variant rounded-full" />
