@@ -18,17 +18,30 @@ export default function BottomNav() {
   const pathname = usePathname();
   const { logout, currentUser } = useUser();
 
+  const parts = pathname.split("/");
+  const firstSegment = parts[1]?.toLowerCase();
+  const currentWorker = (firstSegment === "clemen" || firstSegment === "isabel") ? firstSegment : currentUser?.toLowerCase() || "";
+
+  const resolvedTabs = tabs.map(tab => {
+    const baseHref = tab.href === "/" ? "" : tab.href;
+    const fullHref = `/${currentWorker}${baseHref}`;
+    return {
+      ...tab,
+      fullHref,
+    };
+  });
+
   return (
     <>
       {/* Mobile Bottom Bar */}
       <nav className="fixed bottom-0 left-0 right-0 bg-surface-white border-t border-outline-variant z-50 md:hidden">
         <div className="flex items-center justify-around h-16 px-2 max-w-[430px] mx-auto">
-          {tabs.map(({ href, label, icon: Icon }) => {
-            const active = pathname === href;
+          {resolvedTabs.map(({ fullHref, label, icon: Icon }) => {
+            const active = pathname === fullHref;
             return (
               <Link
-                key={href}
-                href={href}
+                key={fullHref}
+                href={fullHref}
                 className="flex flex-col items-center justify-center gap-1 flex-1 py-2 rounded-lg relative"
               >
                 <div className="flex items-center justify-center w-12 h-6 relative">
@@ -85,12 +98,12 @@ export default function BottomNav() {
         </div>
 
         <div className="flex-1 px-4 space-y-2">
-          {tabs.map(({ href, label, icon: Icon }) => {
-            const active = pathname === href;
+          {resolvedTabs.map(({ fullHref, label, icon: Icon }) => {
+            const active = pathname === fullHref;
             return (
               <Link
-                key={href}
-                href={href}
+                key={fullHref}
+                href={fullHref}
                 className={`flex items-center gap-3 px-5 py-3.5 rounded-2xl transition-all duration-300 relative group ${
                   active ? "text-secondary" : "text-on-surface-variant hover:bg-surface-low hover:text-on-surface"
                 }`}
@@ -119,6 +132,7 @@ export default function BottomNav() {
             );
           })}
         </div>
+
 
         <div className="px-6 mt-auto">
           <div className="p-5 bg-surface-low rounded-3xl border border-outline-variant/30 shadow-sm">

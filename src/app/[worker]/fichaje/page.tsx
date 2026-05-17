@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Camera, CheckCircle2, Clock, Calendar, Trash2, X } from "lucide-react";
+import { Camera, CheckCircle2, Clock, Calendar, Trash2, X, RefreshCw, FlipHorizontal } from "lucide-react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import AppHeader from "@/components/AppHeader";
 import PageWrapper from "@/components/PageWrapper";
@@ -72,6 +72,8 @@ export default function FichajePage() {
   const [recordToDelete, setRecordToDelete] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [facingMode, setFacingMode] = useState<"user" | "environment">("user");
+  const [isMirrored, setIsMirrored] = useState(false);
 
   const todayStr = getTodayKey();
 
@@ -116,7 +118,7 @@ export default function FichajePage() {
   async function startCamera() {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: "user" },
+        video: { facingMode: facingMode },
       });
       setCameraStream(stream);
       setCapturing(true);
@@ -134,6 +136,38 @@ export default function FichajePage() {
     setCapturing(false);
   }
 
+  function toggleMirror() {
+    setIsMirrored((prev) => !prev);
+  }
+
+  async function toggleCamera() {
+    const nextFacingMode = facingMode === "user" ? "environment" : "user";
+    setFacingMode(nextFacingMode);
+    
+    if (cameraStream) {
+      cameraStream.getTracks().forEach((t) => t.stop());
+    }
+    
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: nextFacingMode },
+      });
+      setCameraStream(stream);
+    } catch (err) {
+      console.error("Camera toggle error:", err);
+      try {
+        const fallbackStream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: "user" },
+        });
+        setFacingMode("user");
+        setCameraStream(fallbackStream);
+      } catch (fallbackErr) {
+        console.error("Fallback camera error:", fallbackErr);
+        registerWithoutPhoto();
+      }
+    }
+  }
+
   function capturePhoto() {
     const video = videoRef.current;
     const canvas = canvasRef.current;
@@ -144,7 +178,14 @@ export default function FichajePage() {
       canvas.height = video.videoHeight;
       const context = canvas.getContext("2d");
       if (context) {
+        context.save();
+        if (isMirrored) {
+          context.translate(canvas.width, 0);
+          context.scale(-1, 1);
+        }
         context.drawImage(video, 0, 0);
+        context.restore();
+        
         // Reduced quality to 0.5 to save localStorage space
         const photoUrl = canvas.toDataURL("image/jpeg", 0.5);
         stopCamera();
@@ -209,13 +250,42 @@ export default function FichajePage() {
             exit={{ opacity: 0 }}
             className="fixed top-0 bottom-0 w-full max-w-[430px] md:max-w-3xl z-[70] bg-black flex flex-col left-1/2 -translate-x-1/2"
           >
-            <div className="absolute top-4 right-4 z-50">
+            {/* Camera Controls Overlay */}
+            <div className="absolute top-4 left-4 right-4 z-50 flex items-center justify-between">
+              {/* Mirror toggle button */}
               <button 
-                onClick={stopCamera}
-                className="p-2 rounded-full bg-white/20 text-white hover:bg-white/30 transition-colors"
+                onClick={toggleMirror}
+                className="py-1.5 px-3 rounded-full bg-black/50 backdrop-blur-md text-white hover:bg-black/70 border border-white/20 transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer"
+                title={isMirrored ? "Desactivar modo espejo" : "Activar modo espejo"}
               >
-                <X size={24} />
+                <FlipHorizontal size={16} className={isMirrored ? "text-secondary" : "text-white"} />
+                <span className="text-xs font-semibold">
+                  {isMirrored ? "Espejo: Sí" : "Espejo: No"}
+                </span>
               </button>
+
+              <div className="flex items-center gap-2">
+                {/* Camera rotate/switch button */}
+                <button 
+                  onClick={toggleCamera}
+                  className="py-1.5 px-3 rounded-full bg-black/50 backdrop-blur-md text-white hover:bg-black/70 border border-white/20 transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer"
+                  title="Girar cámara"
+                >
+                  <RefreshCw size={16} />
+                  <span className="text-xs font-semibold">
+                    {facingMode === "user" ? "Frontal" : "Trasera"}
+                  </span>
+                </button>
+
+                {/* Close button */}
+                <button 
+                  onClick={stopCamera}
+                  className="p-1.5 rounded-full bg-black/50 backdrop-blur-md text-white hover:bg-black/70 border border-white/20 transition-all active:scale-95 cursor-pointer"
+                  title="Cerrar"
+                >
+                  <X size={18} />
+                </button>
+              </div>
             </div>
             
             <video
@@ -223,7 +293,8 @@ export default function FichajePage() {
               autoPlay
               playsInline
               muted
-              className="flex-1 object-cover w-full"
+              className="flex-1 object-cover w-full transition-transform duration-300"
+              style={{ transform: isMirrored ? "scaleX(-1)" : "none" }}
             />
             <canvas ref={canvasRef} className="hidden" />
             

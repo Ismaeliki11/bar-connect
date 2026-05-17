@@ -1,11 +1,25 @@
 "use client";
 
 import { useUser } from "./UserContext";
-import ProfileSelector from "./ProfileSelector";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function AppGate({ children }: { children: React.ReactNode }) {
-  const { currentUser, isLoaded } = useUser();
+  const { isLoaded } = useUser();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const isPublicRoute = pathname === "/horario" || pathname === "/";
+  const parts = pathname.split("/");
+  const firstSegment = parts[1]?.toLowerCase();
+  const isValidWorker = firstSegment === "clemen" || firstSegment === "isabel";
+
+  useEffect(() => {
+    if (isLoaded && !isPublicRoute && !isValidWorker) {
+      router.replace("/");
+    }
+  }, [isLoaded, isPublicRoute, isValidWorker, router]);
 
   if (!isLoaded) {
     return (
@@ -21,28 +35,17 @@ export default function AppGate({ children }: { children: React.ReactNode }) {
 
   return (
     <AnimatePresence mode="wait">
-      {!currentUser ? (
-        <motion.div
-          key="profile-selector"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{ duration: 0.4 }}
-          className="fixed inset-0 z-[100]"
-        >
-          <ProfileSelector />
-        </motion.div>
-      ) : (
-        <motion.div
-          key="app-content"
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="flex-1 flex flex-col"
-        >
-          {children}
-        </motion.div>
-      )}
+      <motion.div
+        key={pathname}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        className="flex-1 flex flex-col"
+      >
+        {children}
+      </motion.div>
     </AnimatePresence>
   );
 }
+

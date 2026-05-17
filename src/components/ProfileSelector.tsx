@@ -1,8 +1,9 @@
 "use client";
 
 import { useUser } from "./UserContext";
-import { UserRound, ChevronRight } from "lucide-react";
+import { UserRound, ChevronRight, Calendar } from "lucide-react";
 import { motion, Variants } from "framer-motion";
+import Link from "next/link";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -64,35 +65,47 @@ export default function ProfileSelector() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="grid grid-cols-1 gap-4 w-full max-w-sm"
+        className="flex flex-col gap-4 w-full max-w-sm"
       >
-        {profiles.map((profile) => (
-          <motion.button
-            key={profile.name}
-            variants={itemVariants}
-            whileHover={{ y: -2 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => login(profile.name)}
-            className="group relative flex items-center gap-5 p-5 bg-surface-container border border-outline-variant rounded-xl transition-all duration-300 hover:border-secondary/50 hover:bg-surface-high shadow-sm hover:shadow-md"
-          >
-            <div className="flex-shrink-0 w-14 h-14 rounded-lg bg-surface-white border border-outline-variant flex items-center justify-center transition-colors group-hover:bg-secondary/5 group-hover:border-secondary/20">
-              <UserRound className="text-on-surface-variant group-hover:text-secondary transition-colors" size={24} />
-            </div>
-            
-            <div className="flex-1 text-left">
-              <h2 className="text-xl font-semibold text-on-surface leading-tight">
-                {profile.name}
-              </h2>
-              <p className="text-sm text-on-surface-variant mt-0.5">
-                {profile.role}
-              </p>
-            </div>
+        <div className="grid grid-cols-1 gap-4 w-full">
+          {profiles.map((profile) => (
+            <motion.button
+              key={profile.name}
+              variants={itemVariants}
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => login(profile.name)}
+              className="group relative flex items-center gap-5 p-5 bg-surface-container border border-outline-variant rounded-xl transition-all duration-300 hover:border-secondary/50 hover:bg-surface-high shadow-sm hover:shadow-md cursor-pointer"
+            >
+              <div className="flex-shrink-0 w-14 h-14 rounded-lg bg-surface-white border border-outline-variant flex items-center justify-center transition-colors group-hover:bg-secondary/5 group-hover:border-secondary/20">
+                <UserRound className="text-on-surface-variant group-hover:text-secondary transition-colors" size={24} />
+              </div>
+              
+              <div className="flex-1 text-left">
+                <h2 className="text-xl font-semibold text-on-surface leading-tight">
+                  {profile.name}
+                </h2>
+                <p className="text-sm text-on-surface-variant mt-0.5">
+                  {profile.role}
+                </p>
+              </div>
 
-            <div className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0">
-              <ChevronRight className="text-secondary" size={20} />
-            </div>
-          </motion.button>
-        ))}
+              <div className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0">
+                <ChevronRight className="text-secondary" size={20} />
+              </div>
+            </motion.button>
+          ))}
+        </div>
+
+        <motion.div variants={itemVariants} className="mt-1">
+          <Link
+            href="/horario"
+            className="group flex items-center justify-center gap-2.5 w-full py-4 bg-surface-white border border-outline-variant rounded-xl transition-all duration-300 hover:border-secondary/50 hover:bg-surface-low shadow-sm hover:shadow-md text-on-surface-variant hover:text-secondary font-semibold text-sm cursor-pointer"
+          >
+            <Calendar className="transition-colors text-on-surface-variant group-hover:text-secondary" size={18} />
+            <span>Ver Horario de Trabajo</span>
+          </Link>
+        </motion.div>
       </motion.div>
 
       <motion.div
